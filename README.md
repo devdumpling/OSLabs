@@ -1,1 +1,4 @@
 # OSLabs
+
+Week 7: 
+We have come far, though we are running low on supplies. Today the water went out, and we nearly lost Dennis. Meanwhile, the lab still clings tightly to our soulstrings. It's menacing grip is wet with rage. We will weather this monster, or at least until the dainty halls of Son of Steven open for some poop-water dinner. Dennis decided to take the high road, a wise move, and will instead journey to Chipotle. Adam and I will continue to starve in the lab until further notice. Even if we manage to get through this storm, praise yung 40 lines, we see far in the distance the dark 275 liner, a daunting ghostship beckoning in the distance. For now I must return to the code, lest we be bested. My lab partners are beginning to doubt my efficacy, hence I must stop writing this readme. 
