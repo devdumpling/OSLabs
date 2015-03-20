@@ -438,14 +438,57 @@ public class KThread {
         private int which;
     }
 
+    private static class CommunicatorTest implements Runnable{
+        //Print statements appear to be in a weird order, but it's okay.
+        //It's just a side effect of where the print statements happen
+        //If you're really worried, move them inside the Communicator
+        //class, but that'd be a superpain for actual usage.
+        private int which;
+        private static final Communicator comm = new Communicator();
+        
+        CommunicatorTest(int which){
+            this.which = which;
+        }
+
+        public void run() {
+            new KThread(new SpeakThread()).setName("Speaker").fork();
+            new KThread(new ListenThread()).setName("Listener").fork();
+        }
+        
+        private static class ListenThread implements Runnable{
+        
+            public ListenThread(){}
+
+            public void run(){
+                for(int i=0; i<5; i++){
+                    System.out.println("listener hears: " + comm.listen());
+                }
+            }
+        }
+
+        private static class SpeakThread implements Runnable{
+        
+            public SpeakThread(){}
+
+            //speak five times 
+            public void run(){
+                for(int i=0; i<5; i++){
+                    System.out.println("Speaker speaks: " + i);
+                    comm.speak(i);
+                }
+            }
+        }
+    }
+
     /**
      * Tests whether this module is working.
      */
     public static void selfTest() {
 	Lib.debug(dbgThread, "Enter KThread.selfTest");
 	
-	new KThread(new JoinTest(1)).setName("forked thread").fork();
+	//new KThread(new JoinTest(1)).setName("forked thread").fork();
         
+        new KThread(new CommunicatorTest(1)).setName("Communicator Forked Thread").fork();
     }
 
     private static final char dbgThread = 't';

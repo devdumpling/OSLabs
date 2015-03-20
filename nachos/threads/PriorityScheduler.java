@@ -126,6 +126,7 @@ public class PriorityScheduler extends Scheduler {
      * A <tt>ThreadQueue</tt> that sorts threads by priority.
      */
     protected class PriorityQueue extends ThreadQueue {
+
 	PriorityQueue(boolean transferPriority) {
 	    this.transferPriority = transferPriority;
 	}
@@ -178,7 +179,8 @@ public class PriorityScheduler extends Scheduler {
      * @see	nachos.threads.KThread#schedulingState
      */
     protected class ThreadState {
-	/**
+	
+        /**
 	 * Allocate a new <tt>ThreadState</tt> object and associate it with the
 	 * specified thread.
 	 *
@@ -205,7 +207,9 @@ public class PriorityScheduler extends Scheduler {
 	 * @return	the effective priority of the associated thread.
 	 */
 	public int getEffectivePriority() {
-	    // implement me
+	    //Maximize over all non-finished threads in donorList
+            
+            // implement me
 	    return priority;
 	}
 
@@ -236,7 +240,10 @@ public class PriorityScheduler extends Scheduler {
 	 * @see	nachos.threads.ThreadQueue#waitForAccess
 	 */
 	public void waitForAccess(PriorityQueue waitQueue) {
-	    // implement me
+	    //Current thread is waiting on this.thread, so add currentThread
+            //to the donorlist.
+            
+            // implement me
 	}
 
 	/**
@@ -250,12 +257,22 @@ public class PriorityScheduler extends Scheduler {
 	 * @see	nachos.threads.ThreadQueue#nextThread
 	 */
 	public void acquire(PriorityQueue waitQueue) {
-	    // implement me
+	    //Should donate the calling thread's priority to all members
+            //of the PriorityQueue.
+            //TODO: Probably inefficient, maybe we should worry about this?
+            // implement me
 	}	
 
 	/** The thread with which this object is associated. */	   
 	protected KThread thread;
 	/** The priority of the associated thread. */
 	protected int priority;
+        /** Keeps track of who has donated priority to this ThreadState */
+        protected ArrayList<ThreadState> donorList = new ArrayList<ThreadState>();
+        
     }
 }
+
+//NOTES FOR IMPLEMENTATION
+/* Most of the work we'll be doing will happen in ThreadState,
+ */
