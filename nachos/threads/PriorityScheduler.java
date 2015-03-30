@@ -141,10 +141,20 @@ public class PriorityScheduler extends Scheduler {
 	    getThreadState(thread).acquire(this);
 	}
 
+	//I think this should work
 	public KThread nextThread() {
 	    Lib.assertTrue(Machine.interrupt().disabled());
 	    // implement me
-	    return null;
+	    //if no threads waiting, return null
+	    if (donorList.isEmpty()) return null;
+
+	    //return the thread associated with the maximum value in our donor list
+	    KThread next = pickNextThread().thread;
+
+	    //remove the threadstate associated with it from the donor list
+	    donorList.remove(pickNextThread());
+
+	    return next;
 	}
 
 	/**
@@ -154,9 +164,19 @@ public class PriorityScheduler extends Scheduler {
 	 * @return	the next thread that <tt>nextThread()</tt> would
 	 *		return.
 	 */
+
+	//I think this should work
 	protected ThreadState pickNextThread() {
 	    // implement me
-	    return null;
+	    //return the maximum value thread in our donor list
+	    if (donorList.size() = 0) return null;
+	    ThreadState maxThread = donorList.get(0);
+	    for (int i =1; i<donorList.size(); i++) {
+		if (donorList.get(i).getEffectivePriority() > maxThread.getEffectivePriority())			       
+		    maxThread = donorList.get(i);
+	    }
+
+	    return maxThread;
 	}
 	
 	public void print() {
@@ -225,6 +245,7 @@ public class PriorityScheduler extends Scheduler {
 	    this.priority = priority;
 	    
 	    // implement me
+	    // seems implemented
 	}
 
 	/**
@@ -261,6 +282,7 @@ public class PriorityScheduler extends Scheduler {
             //of the PriorityQueue.
             //TODO: Probably inefficient, maybe we should worry about this?
             // implement me
+	    //loop over queue and setpriority to thread.priority+this.priority
 	}	
 
 	/** The thread with which this object is associated. */	   
